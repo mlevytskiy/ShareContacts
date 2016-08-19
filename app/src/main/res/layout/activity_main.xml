@@ -25,7 +25,8 @@
             android:layout_weight="1"
             android:text="Edit"
             android:textColor="@android:color/white"
-            android:background="@drawable/edit_button" />
+            android:background="@drawable/custom_btn_blue"
+            android:onClick="onClickEdit"/>
 
         <View
             android:layout_width="5dp"
@@ -37,8 +38,9 @@
             android:layout_weight="1"
             android:text="Share"
             android:textColor="@android:color/white"
-            android:background="@drawable/share_button"
-            android:drawableRight="@drawable/ic_social_share" />
+            android:background="@drawable/custom_btn_orange"
+            android:drawableRight="@drawable/ic_social_share"
+            android:onClick="onClickShare" />
 
         <View
             android:layout_width="5dp"

@@ -1,12 +1,15 @@
 package sharecontacts.com.sharecontacts;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.tamir7.contacts.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +30,8 @@ public class ContactsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Contact getItem(int i) {
+        return contacts.get(i);
     }
 
     @Override
@@ -46,26 +49,42 @@ public class ContactsAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        Contact c = contacts.get(i);
-        if (c.getPhoneNumbers().isEmpty()) {
-            viewHolder.phone.setText("null");
-        } else {
-            viewHolder.phone.setText(c.getPhoneNumbers().get(0).getNumber());
-        }
-        viewHolder.name.setText(c.getDisplayName());
+        viewHolder.fill(contacts.get(i));
         return view;
     }
 
     private static class ViewHolder {
 
-        public TextView name;
-        public TextView phone;
+        private TextView name;
+        private TextView phone;
+        private CheckBox checkbox;
 
         public ViewHolder(View view) {
             this.name = (TextView) view.findViewById(R.id.name);
             this.phone = (TextView) view.findViewById(R.id.phone);
+            this.checkbox = (CheckBox) view.findViewById(R.id.checkbox);
         }
 
+        public void fill(Contact c) {
+            checkbox.setChecked( TextUtils.equals("null", c.getPhotoUri()) );
+            if (c.getPhoneNumbers().isEmpty()) {
+                phone.setText("null");
+            } else {
+                phone.setText(c.getPhoneNumbers().get(0).getNumber());
+            }
+            name.setText(c.getDisplayName());
+        }
+
+    }
+
+    public List<Contact> getSelectedContacts() {
+        List<Contact> selected = new ArrayList<>();
+        for (Contact contact : contacts) {
+            if ( TextUtils.equals("null", contact.getPhotoUri())) {
+                selected.add(contact);
+            }
+        }
+        return selected;
     }
 
 }
