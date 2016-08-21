@@ -18,7 +18,6 @@ public class EditActivity extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_edit);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String message = getIntent().getStringExtra(KEY_TEXT);
         editText = (EditText) findViewById(R.id.edit_text);
         editText.setText(message);
