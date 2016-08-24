@@ -5,11 +5,11 @@ android {
     buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "com.share.mycontacts"
+        applicationId "com.share.mycontacts2"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.01"
+        versionCode 4
+        versionName "1.02"
     }
     buildTypes {
         release {
