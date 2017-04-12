@@ -1,8 +1,11 @@
 apply plugin: 'com.android.application'
 
+def Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.share.mycontacts2"
@@ -11,10 +14,31 @@ android {
         versionCode 4
         versionName "1.02"
     }
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            storeFile file("keystores/debug/debug.keystore")
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file("keystores/release/my-release-key.keystore")
+            keyAlias 'alias_name'
+            keyPassword properties.getProperty("password")
+            storePassword properties.getProperty("password")
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            useProguard false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
