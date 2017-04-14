@@ -1,7 +1,12 @@
 package sharecontacts.com.sharecontacts;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -12,6 +17,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.tamir7.contacts.Contact;
 import com.github.tamir7.contacts.Contacts;
@@ -21,7 +27,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PERMISSIONS_REQUEST = 223;
     private ContactsAdapter adapter;
+    private Runnable readContacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +61,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        List<Contact> contacts = Contacts.getQuery().hasPhoneNumber().find();
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        adapter = new ContactsAdapter(contacts);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        readContacts = new Runnable() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Contact c = adapter.getItem(i);
-                if ( TextUtils.equals("null", c.getPhotoUri()) ) {
-                    deselectContact(c);
-                } else {
-                    selectContact(c);
-                }
-                adapter.notifyDataSetInvalidated();
+            public void run() {
+                List<Contact> contacts = Contacts.getQuery().hasPhoneNumber().find();
+                ListView listView = (ListView) findViewById(R.id.list_view);
+                adapter = new ContactsAdapter(contacts);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Contact c = adapter.getItem(i);
+                        if ( TextUtils.equals("null", c.getPhotoUri()) ) {
+                            deselectContact(c);
+                        } else {
+                            selectContact(c);
+                        }
+                        adapter.notifyDataSetInvalidated();
+                    }
+                });
+                listView.setAdapter(adapter);
             }
-        });
-        listView.setAdapter(adapter);
+        };
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+                Toast.makeText(this, "need read contacts permissions", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST);
+            }
+        } else {
+            readContacts.run();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    readContacts.run();
+                }
+        }
     }
 
     private void linkTextStyle(TextView tv) {
