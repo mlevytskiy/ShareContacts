@@ -8,7 +8,7 @@
     android:background="@android:color/white">
 
     <Button
-        android:background="@drawable/custom_btn_orange"
+        android:background="@drawable/custom_btn_red"
         android:drawableRight="@drawable/ic_social_share"
         android:layout_height="50dp"
         android:layout_width="match_parent"

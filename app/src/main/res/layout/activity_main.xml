@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:text="Share"
             android:textColor="@android:color/white"
-            android:background="@drawable/custom_btn_orange"
+            android:background="@drawable/custom_btn_red"
             android:drawableRight="@drawable/ic_social_share"
             android:onClick="onClickShare" />
 
