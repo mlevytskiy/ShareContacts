@@ -42,26 +42,10 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <sharecontacts.com.sharecontacts.view.PhonesView
+            android:id="@+id/phones_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone: "
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
-
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

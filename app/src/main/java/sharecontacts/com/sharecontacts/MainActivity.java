@@ -147,28 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String getPreparedStringForShare() {
         List<Contact> contacts = adapter.getSelectedContacts();
-        if (contacts.isEmpty()) {
-            return "";
-        } else {
-            return createMessage(contacts);
-        }
-    }
-
-    private String createMessage(List<Contact> selected) {
-        StringBuilder strB = new StringBuilder();
-        for (Contact contact : selected) {
-            strB.append("phone: ");
-            strB.append(contact.getPhoneNumbers().get(0).getNormalizedNumber());
-            strB.append("\n");
-            strB.append("name: ");
-            strB.append(contact.getDisplayName());
-            strB.append("\n\n");
-        }
-        if (strB.length() == 0) {
-            return "";
-        } else {
-            return strB.substring(0, strB.length()-2).toString();
-        }
+        return ContactUtils.toString(contacts);
     }
 
 }

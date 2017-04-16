@@ -12,6 +12,8 @@ import com.github.tamir7.contacts.Contact;
 import java.util.ArrayList;
 import java.util.List;
 
+import sharecontacts.com.sharecontacts.view.PhonesView;
+
 /**
  * Created by maks on 8/19/16.
  * email: m.levytskiy@gmail.com
@@ -36,7 +38,7 @@ public class ContactsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -56,22 +58,18 @@ public class ContactsAdapter extends BaseAdapter {
     private static class ViewHolder {
 
         private TextView name;
-        private TextView phone;
+        private PhonesView phonesView;
         private CheckBox checkbox;
 
         public ViewHolder(View view) {
             this.name = (TextView) view.findViewById(R.id.name);
-            this.phone = (TextView) view.findViewById(R.id.phone);
+            this.phonesView = (PhonesView) view.findViewById(R.id.phones_view);
             this.checkbox = (CheckBox) view.findViewById(R.id.checkbox);
         }
 
         public void fill(Contact c) {
             checkbox.setChecked( TextUtils.equals("null", c.getPhotoUri()) );
-            if (c.getPhoneNumbers().isEmpty()) {
-                phone.setText("null");
-            } else {
-                phone.setText(c.getPhoneNumbers().get(0).getNumber());
-            }
+            phonesView.setPhones(c.getPhoneNumbers());
             name.setText(c.getDisplayName());
         }
 
