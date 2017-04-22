@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.github.tamir7.contacts.PhoneNumber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sharecontacts.com.sharecontacts.R;
@@ -24,6 +25,7 @@ public class PhonesView extends LinearLayout {
     private TextView phone1Title;
     private TextView[] phones = new TextView[PHONES_MAX_COUNT];
     private View[] phoneParents = new View[PHONES_MAX_COUNT];
+    private List<String> phoneTitlesList = new ArrayList<>();
 
     public PhonesView(Context context) {
         super(context);
@@ -68,9 +70,9 @@ public class PhonesView extends LinearLayout {
 
     public void setPhones(List<PhoneNumber> phones) {
         int size = Math.min(PHONES_MAX_COUNT, phones.size());
-        String firstPhoneTitle = (size == 1) ? "Phone: " : "Phone1: ";
+        String firstPhoneTitle = getFirstPhoneTitle(size);
         phone1Title.setText(firstPhoneTitle);
-        if (phones.size() < this.phones.length) {
+        if (size < this.phones.length) {
             for (int i = size; i < this.phones.length; i++) {
                 this.phoneParents[i].setVisibility(GONE);
             }
@@ -81,5 +83,16 @@ public class PhonesView extends LinearLayout {
         for (int i = 0; i < size; i++) {
             this.phones[i].setText("" + phones.get(i).getNumber());
         }
+    }
+
+    private String getFirstPhoneTitle(int size) {
+        if (!phoneTitlesList.isEmpty()) {
+            return phoneTitlesList.get(0);
+        }
+        return (size == 1) ? "Phone: " : "Phone1: ";
+    }
+
+    public void setTitlesFromAdditionalInfo(List<String> phoneTitles) {
+        phoneTitlesList = phoneTitles;
     }
 }

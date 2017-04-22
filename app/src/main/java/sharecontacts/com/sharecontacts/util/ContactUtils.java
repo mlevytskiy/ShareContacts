@@ -1,4 +1,4 @@
-package sharecontacts.com.sharecontacts;
+package sharecontacts.com.sharecontacts.util;
 
 import com.github.tamir7.contacts.Contact;
 

@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.github.tamir7.contacts.Contact;
 import com.github.tamir7.contacts.Contacts;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    selectContact(adapter.getItem(i));
+                    adapter.setContactSelected(i, true);
                 }
                 adapter.notifyDataSetInvalidated();
             }
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    deselectContact(adapter.getItem(i));
+                    adapter.setContactSelected(i, false);
                 }
                 adapter.notifyDataSetInvalidated();
             }
@@ -70,12 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Contact c = adapter.getItem(i);
-                        if ( TextUtils.equals("null", c.getPhotoUri()) ) {
-                            deselectContact(c);
-                        } else {
-                            selectContact(c);
-                        }
+                        adapter.toggleSelected(i);
                         adapter.notifyDataSetInvalidated();
                     }
                 });
@@ -111,28 +105,8 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(spannableString, TextView.BufferType.SPANNABLE);
     }
 
-    private void deselectContact(Contact c) {
-        try {
-            Field field = c.getClass().getDeclaredField("photoUri");
-            field.setAccessible(true);
-            field.set(c, null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void selectContact(Contact c) {
-        try {
-            Field field = c.getClass().getDeclaredField("photoUri");
-            field.setAccessible(true);
-            field.set(c, "null");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    public void onClickEdit2(View view) {
+        Toast.makeText(this, "onClickEdit2", Toast.LENGTH_LONG).show();
     }
 
     public void onClickShare(View view) {
@@ -146,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getPreparedStringForShare() {
-        List<Contact> contacts = adapter.getSelectedContacts();
-        return ContactUtils.toString(contacts);
+        List<ContactWrapper> contacts = adapter.getSelectedContacts();
+        return TextUtils.join("\n\n", contacts);
     }
 
 }

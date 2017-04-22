@@ -3,6 +3,7 @@
     package="sharecontacts.com.sharecontacts">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_ST" />
 
     <application
         android:allowBackup="true"
