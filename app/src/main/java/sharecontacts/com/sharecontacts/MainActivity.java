@@ -21,11 +21,15 @@ import android.widget.Toast;
 
 import com.github.tamir7.contacts.Contact;
 import com.github.tamir7.contacts.Contacts;
+import com.github.tamir7.contacts.PhoneNumber;
+import com.github.tamir7.contacts.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int EDIT_CONTACT_REQUEST = 6767;
     private static final int PERMISSIONS_REQUEST = 223;
     private ContactsAdapter adapter;
     private Runnable readContacts;
@@ -63,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
         readContacts = new Runnable() {
             @Override
             public void run() {
-                List<Contact> contacts = Contacts.getQuery().hasPhoneNumber().find();
+                Query q = Contacts.getQuery();
+                q.include(Contact.Field.DisplayName, Contact.Field.Email, Contact.Field.PhotoUri, Contact.Field.PhoneLabel, Contact.Field.PhoneNumber, Contact.Field.PhoneType);
+                q.hasPhoneNumber();
+                List<Contact> contacts = q.find();
                 ListView listView = (ListView) findViewById(R.id.list_view);
                 adapter = new ContactsAdapter(contacts);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,8 +112,27 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(spannableString, TextView.BufferType.SPANNABLE);
     }
 
-    public void onClickEdit2(View view) {
-        Toast.makeText(this, "onClickEdit2", Toast.LENGTH_LONG).show();
+    public void onClickEditContact(View view) {
+        ContactWrapper contactWrapper = (ContactWrapper) view.getTag();
+        Intent intent = new Intent(this, EditContactActivity.class);
+        intent.putExtra(EditContactActivity.NAME, contactWrapper.contact.getDisplayName());
+        List<String> phones = new ArrayList<>();
+        for (PhoneNumber phoneNumber : contactWrapper.contact.getPhoneNumbers()) {
+            phones.add(phoneNumber.getNumber());
+        }
+        intent.putExtra(EditContactActivity.PHONES, TextUtils.join(EditContactActivity.PHONES_DELIMITER, phones));
+        startActivityForResult(intent, EDIT_CONTACT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDIT_CONTACT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String name = data.getStringExtra(EditContactActivity.NAME);
+                adapter.update(name);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onClickShare(View view) {

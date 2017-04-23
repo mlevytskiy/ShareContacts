@@ -22,7 +22,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:textColor="@android:color/black"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:gravity="center|left" />
 
     <View
         android:layout_width="1px"
@@ -39,10 +40,11 @@
         android:background="#FFedefec" />
 
     <ImageButton
+        android:id="@+id/edit_contact_image_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:onClick="onClickEdit2"
+        android:onClick="onClickEditContact"
         android:paddingLeft="16dp"
         android:paddingRight="8dp"
         android:src="@drawable/ic_edit"/>

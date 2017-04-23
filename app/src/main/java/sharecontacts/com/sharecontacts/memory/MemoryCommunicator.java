@@ -4,6 +4,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,7 +63,7 @@ public class MemoryCommunicator {
         if (map.isEmpty()) {
             sp.edit().remove(key.toString()).apply();
         } else {
-            String str = AdditionalContactInfo.toStr(map);
+            String str = new Gson().toJson(map);
             sp.edit().putString(key.toString(), str).apply();
         }
     }
@@ -67,7 +71,8 @@ public class MemoryCommunicator {
     public Map<String, AdditionalContactInfo> loadAdditionalContactInfo(Key key) {
         if (sp.contains(key.toString())) {
             String str = sp.getString(key.toString(), null);
-            return AdditionalContactInfo.fromStr(str);
+            Type type = new TypeToken<Map<String, AdditionalContactInfo>>(){}.getType();
+            return new Gson().fromJson(str, type);
         } else {
             return new HashMap<>();
         }

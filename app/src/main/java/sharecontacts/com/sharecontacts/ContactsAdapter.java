@@ -1,16 +1,21 @@
 package sharecontacts.com.sharecontacts;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.tamir7.contacts.Contact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+import sharecontacts.com.sharecontacts.memory.AdditionalContactInfo;
+import sharecontacts.com.sharecontacts.memory.Key;
 
 /**
  * Created by max on 20.04.17.
@@ -21,10 +26,30 @@ public class ContactsAdapter extends BaseAdapter {
     private List<ContactWrapper> contactWrappers = new ArrayList<>();
 
     public ContactsAdapter(List<Contact> contacts) {
-        List<String> phoneTitles = Arrays.asList("Phone1", "Phone2", "Phone3", "Phone4", "Phone5");
+        DefaultContactTitles.instance.fill(contacts);
         for (int i = 0; i < contacts.size(); i++) {
-            contactWrappers.add(new ContactWrapper(contacts.get(i), "Name", "Phone", phoneTitles, "Phone is empty"));
+            Contact current = contacts.get(i);
+            String nameTitle = DefaultContactTitles.instance.getNameTitle(current.getDisplayName());
+            String singlePhoneTitle = DefaultContactTitles.instance.getSinglePhoneTitle(current.getDisplayName());
+            List<String> phoneTitles = DefaultContactTitles.instance.getPhoneTitles(current.getDisplayName());
+            Map<String, AdditionalContactInfo> map = CustomApplication.instance.memory.loadAdditionalContactInfo(Key.additionalContactInfo);
+            contactWrappers.add(new ContactWrapper(current, nameTitle, singlePhoneTitle, phoneTitles, "Phone is empty", map));
         }
+    }
+
+    public void update(String contactName) {
+        Map<String, AdditionalContactInfo> map = CustomApplication.instance.memory.loadAdditionalContactInfo(Key.additionalContactInfo);
+        int index = 0;
+        for (int i = 0; i < contactWrappers.size(); i++) {
+            if (TextUtils.equals(contactName, contactWrappers.get(i).contact.getDisplayName())) {
+                index = i;
+                break;
+            }
+        }
+        ContactWrapper oldWrapper = contactWrappers.get(index);
+        ContactWrapper newWrapper = new ContactWrapper(oldWrapper, map);
+        contactWrappers.set(index, newWrapper);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -80,15 +105,18 @@ public class ContactsAdapter extends BaseAdapter {
 
         private CheckBox checkbox;
         private TextView textView;
+        private ImageButton editContact;
 
         public ViewHolder(View view) {
             this.textView = (TextView) view.findViewById(R.id.contact_str);
             this.checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+            this.editContact = (ImageButton) view.findViewById(R.id.edit_contact_image_button);
         }
 
         public void fill(ContactWrapper contactWrapper) {
-            textView.setText(contactWrapper.toString());
+            this.textView.setText(contactWrapper.toString());
             this.checkbox.setChecked(contactWrapper.isSelected());
+            this.editContact.setTag(contactWrapper);
         }
 
     }
