@@ -8,4 +8,9 @@
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="WhiteBackgroundTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
 </resources>

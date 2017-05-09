@@ -49,4 +49,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.github.tamir7.contacts:contacts:1.1.4'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.sun.mail:android-mail:1.5.5'
+    compile 'com.sun.mail:android-activation:1.5.5'
 }

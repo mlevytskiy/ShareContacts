@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="sharecontacts.com.sharecontacts.MainActivity"
+    android:orientation="vertical"
+    android:background="@android:color/white" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Close"
+            android:textColor="@android:color/white"
+            android:background="@drawable/custom_btn_blue"
+            android:onClick="onClickClose"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Send"
+            android:textColor="@android:color/white"
+            android:background="@drawable/custom_btn_red"
+            android:onClick="onClickSend" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/message_edit_text"
+        android:background="@drawable/custom_edit_text"
+        android:gravity="left|top"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minLines="3"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="Your feedback" />
+
+    <EditText
+        android:id="@+id/mail_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="Please enter your *****@gmail.com"
+        android:background="@drawable/custom_edit_text"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+</LinearLayout>

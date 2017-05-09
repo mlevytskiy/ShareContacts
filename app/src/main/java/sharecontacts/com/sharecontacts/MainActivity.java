@@ -15,6 +15,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,29 +41,29 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        TextView selectAll = (TextView) findViewById(R.id.select_all);
-        linkTextStyle(selectAll);
-        selectAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    adapter.setContactSelected(i, true);
-                }
-                adapter.notifyDataSetInvalidated();
-            }
-        });
-
-        TextView deselectAll = (TextView) findViewById(R.id.deselect_all);
-        linkTextStyle(deselectAll);
-        deselectAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    adapter.setContactSelected(i, false);
-                }
-                adapter.notifyDataSetInvalidated();
-            }
-        });
+//        TextView selectAll = (TextView) findViewById(R.id.select_all);
+//        linkTextStyle(selectAll);
+//        selectAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                for (int i = 0; i < adapter.getCount(); i++) {
+//                    adapter.setContactSelected(i, true);
+//                }
+//                adapter.notifyDataSetInvalidated();
+//            }
+//        });
+//
+//        TextView deselectAll = (TextView) findViewById(R.id.deselect_all);
+//        linkTextStyle(deselectAll);
+//        deselectAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                for (int i = 0; i < adapter.getCount(); i++) {
+//                    adapter.setContactSelected(i, false);
+//                }
+//                adapter.notifyDataSetInvalidated();
+//            }
+//        });
 
         readContacts = new Runnable() {
             @Override
@@ -150,4 +151,19 @@ public class MainActivity extends AppCompatActivity {
         return TextUtils.join("\n\n", contacts);
     }
 
+    public void onClickToggleSelectAll(View view) {
+        CheckBox allCheckBox = (CheckBox) view.findViewById(R.id.all_checkbox);
+        boolean isChecked = allCheckBox.isChecked();
+        boolean newChecked = !isChecked;
+        allCheckBox.setChecked(newChecked);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            adapter.setContactSelected(i, newChecked);
+        }
+        adapter.notifyDataSetInvalidated();
+
+    }
+
+    public void onClickFeedback(View view) {
+        startActivity(new Intent(this, FeedbackActivity.class));
+    }
 }

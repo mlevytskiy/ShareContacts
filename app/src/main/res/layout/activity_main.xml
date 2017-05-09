@@ -50,32 +50,53 @@
     </LinearLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="1dp">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onClickToggleSelectAll"
+            android:gravity="center|left"
+            android:paddingLeft="6dp">
+
+            <CheckBox
+                android:id="@+id/all_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:focusable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="all"
+                android:textSize="16dp"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/select_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
-            android:text="select all"
-            android:textSize="16dp"
-            android:textColor="@android:color/black" />
+            android:text="feedback"
+            android:drawableRight="@drawable/feedback"
+            android:drawableLeft="@drawable/feedback2"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:background="@drawable/custom_feedback_btn"
+            android:focusable="true"
+            android:clickable="true"
+            android:onClick="onClickFeedback" />
 
-        <TextView
-            android:id="@+id/deselect_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="deselect all"
-            android:textSize="16dp"
-            android:textColor="@android:color/black" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/list_view"
