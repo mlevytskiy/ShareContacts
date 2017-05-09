@@ -7,7 +7,6 @@ package sharecontacts.com.sharecontacts.util;
 public class SecureStr {
 
     //sender|senderPassword|receiver
-
     public static String STR = "Gc/Z5Tn53EKkpczPQMMAJ2guDpqXDeJRNtrFDini6xJbXZid5wu717dh4yilTIMQ9iyVk+SAZ9iztW9b85Mryw==";
 
 

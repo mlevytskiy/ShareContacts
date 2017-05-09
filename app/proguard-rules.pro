@@ -19,3 +19,5 @@
 -keepclassmembers class com.github.tamir7.contacts.Contact {
     private <fields>;
 }
+
+-dontwarn java.awt.**, com.sun.mail.**
