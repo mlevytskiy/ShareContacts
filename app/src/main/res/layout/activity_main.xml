@@ -58,18 +58,17 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="3dp"
             android:clickable="true"
             android:focusable="true"
             android:onClick="onClickToggleSelectAll"
-            android:gravity="center|left"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
             android:paddingLeft="6dp">
 
             <CheckBox
                 android:id="@+id/all_checkbox"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clickable="false"
                 android:focusable="false" />
 
@@ -94,7 +93,8 @@
             android:background="@drawable/custom_feedback_btn"
             android:focusable="true"
             android:clickable="true"
-            android:onClick="onClickFeedback" />
+            android:onClick="onClickFeedback"
+            android:layout_marginBottom="8dp" />
 
     </RelativeLayout>
 
