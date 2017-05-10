@@ -11,8 +11,8 @@ android {
         applicationId "com.share.mycontacts2"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.06"
+        versionCode 7
+        versionName "1.07"
     }
 
     signingConfigs {
